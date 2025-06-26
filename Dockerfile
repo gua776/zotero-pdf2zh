@@ -1,14 +1,13 @@
-# 声明基础镜像参数，并提供一个推荐的默认值。
-# 如果构建时没有通过 --build-arg 明确指定，将使用此默认值。
+# Dockerfile
+
+# 重要：在这里为 ZOTERO_PDF2ZH_FROM_IMAGE 提供一个默认值
+# 例如，一个适合你应用程序的特定轻量级 Python 镜像。
 ARG ZOTERO_PDF2ZH_FROM_IMAGE=python:3.10-slim-bookworm
 
-# 使用声明的基础镜像。这是解决之前错误的关键。
 FROM ${ZOTERO_PDF2ZH_FROM_IMAGE}
 
-# 声明下载服务器文件 URL 的参数。
 ARG ZOTERO_PDF2ZH_SERVER_FILE_DOWNLOAD_URL
 
-# 设置工作目录。
 WORKDIR /app
 
 # --- apt 包管理相关（可选，根据你的环境决定是否取消注释）---
@@ -17,8 +16,6 @@ WORKDIR /app
 #    sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
 
 # 更新 apt 包列表，并清理缓存以减小镜像大小。
-# 注意：你的 Dockerfile 中没有通过 apt-get install 安装任何包，
-# 但如果以后需要，可以在此行后添加安装命令。
 RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
@@ -38,7 +35,6 @@ RUN uv pip install --system -U flask waitress pypdf
 ADD "${ZOTERO_PDF2ZH_SERVER_FILE_DOWNLOAD_URL}" /app/
 
 # 修复 server.py 中的 Bug，用于在 Linux 环境下运行。
-# 这一行会将 server.py 中以 'path = path.replace' 开头的行中的注释符号 '#' 移除。
 RUN sed -i '/path = path\.replace/ s/ #//' /app/server.py
 
 # --- 容器配置 ---
