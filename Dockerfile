@@ -47,4 +47,4 @@ RUN sed -i '/path = path\.replace/ s/ #//' /app/server.py
 EXPOSE 8888
 
 # 定义容器启动时执行的命令。
-CMD ["python", "server.py", "8888"]
+CMD ["python3", "server.py", "8888"]
