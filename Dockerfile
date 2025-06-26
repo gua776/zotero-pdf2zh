@@ -28,7 +28,9 @@ RUN apt-get update && \
 # RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
 #    pip config set global.extra-index-url "https://pypi.tuna.tsinghua.edu.cn/simple"
 
-RUN uv pip install --system -U flask waitress pypdf
+RUN python3 -m pip install --upgrade pip
+RUN pip install --system -U flask waitress pypdf
+
 
 # --- 添加应用程序文件 ---
 # 从指定 URL 下载服务器文件并添加到 /app 目录。
