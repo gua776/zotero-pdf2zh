@@ -1,10 +1,10 @@
 # Dockerfile
 
 # 重要：在这里为 ZOTERO_PDF2ZH_FROM_IMAGE 提供一个默认值
-# 例如，一个适合你应用程序的特定轻量级 Python 镜像。
-ARG ZOTERO_PDF2ZH_FROM_IMAGE=python:3.10-slim-bookworm
 
+ARG ZOTERO_PDF2ZH_FROM_IMAGE=ubuntu:22.04
 FROM ${ZOTERO_PDF2ZH_FROM_IMAGE}
+
 
 ARG ZOTERO_PDF2ZH_SERVER_FILE_DOWNLOAD_URL
 
