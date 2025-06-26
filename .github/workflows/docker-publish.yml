@@ -1,0 +1,50 @@
+# 工作流程的名称
+name: Build and Push Docker Image to Docker Hub
+
+# 触发工作流程的事件
+# 这里设置为当有代码 push 到 main 分支时触发
+on:
+  push:
+    branches: [ "main" ]
+
+# 工作流程中运行的任务（jobs）
+jobs:
+  # 定义一个名为 build-and-push 的任务
+  build-and-push:
+    # 指定任务运行的虚拟环境
+    runs-on: ubuntu-latest
+
+    # 任务的步骤（steps）
+    steps:
+      # 第一步：检出仓库代码
+      # 使用官方的 checkout action
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 第二步：登录到 Docker Hub
+      # 使用官方的 docker/login-action
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 第三步：设置 Docker Buildx，以便使用更高级的构建功能
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 第四步：构建 Docker 镜像并推送到 Docker Hub
+      # 使用官方的 docker/build-push-action
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          # context: . 表示 Dockerfile 的上下文路径是当前目录
+          context: .
+          # file: 指定 Dockerfile 的路径
+          file: ./Dockerfile
+          # push: true 表示在构建成功后推送到仓库
+          push: true
+          # tags: 为镜像指定标签。
+          # ${{ secrets.DOCKERHUB_USERNAME }} 引用了之前设置的 Secret
+          # /myapp:latest 是你的镜像名称和标签，请根据需要修改 "myapp"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
