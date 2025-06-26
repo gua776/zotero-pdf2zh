@@ -247,7 +247,6 @@ uv run server.py 8888
 - 推荐下载并使用 [霞鹜文楷字体 (LXGWWenKai-Regular.ttf)](https://github.com/lxgw/LxgwWenKai/releases/download/v1.510/LXGWWenKai-Regular.ttf) 或 "微信读书AI楷"(可以在贴吧等社区搜索下载).
 
 - 如果使用docker方法启动，并需要自定义字体，需要进行以下步骤：
-
     1.  在`docker-compose.yaml`文件中挂载字体文件：
 
     ```shell
@@ -256,7 +255,6 @@ uv run server.py 8888
         - ./zotero-pdf2zh/config.json:/app/config.json
         - ./zotero-pdf2zh/LXGWWenKai-Regular.ttf:/app/LXGWWenKai-Regular.ttf # 这一行是新添加的字体挂载。
     ```
-
     2.  执行`docker compose up -d`，更新容器挂载信息。
 
 **第三步：翻译引擎配置**
