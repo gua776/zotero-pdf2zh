@@ -29,8 +29,10 @@ RUN apt-get update && \
 #    pip config set global.extra-index-url "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*
+
 RUN python3 -m pip install --upgrade pip
-RUN pip install --system -U flask waitress pypdf
+RUN python3 -m pip install -U flask waitress pypdf
+
 
 
 # --- 添加应用程序文件 ---
